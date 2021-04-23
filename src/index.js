@@ -4,12 +4,21 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { createStore ,applyMiddleware,compose} from "redux";
-import Reducer from "./Reducers/Reducer";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import nameReducer from "./Reducers/nameReducer";
+import wishReducer from "./Reducers/wishReducer";
 import thunk from "redux-thunk";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(Reducer,composeEnhancers(applyMiddleware(thunk)));
 
+const rootReducer = combineReducers({
+  name: nameReducer,
+  wish: wishReducer,
+});
+const store = createStore(
+  rootReducer,
+  { name: "asad", wish: ["apple", "mango"] },
+  composeEnhancers(applyMiddleware(thunk))
+);
 ReactDOM.render(
   <Provider store={store}>
     <App />
